@@ -3,8 +3,8 @@ import { scale } from "react-native-size-matters";
 import Svg, { Rect, Defs, Pattern, Use, Image } from "react-native-svg";
 const Onboarding2 = (props: any) => (
   <Svg
-    width={scale(290)}
-    height={scale(310)}
+    width={scale(300)}
+    height={scale(277)}
     viewBox="0 0 320 297"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
