@@ -51,6 +51,19 @@ export default function OnboardingScreeen() {
           </View>
         ))}
       </ScrollView>
+      <View style={styles.paginationContainer}>
+        {onBoardingData.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dot,
+              {
+                opacity: activeIndex === index ? 1 : 0.5,
+              },
+            ]}
+          />
+        ))}
+      </View>
     </LinearGradient>
   );
 }
@@ -83,5 +96,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "SegeoUI",
     paddingTop: verticalScale(10),
+  },
+  paginationContainer: {
+    position: "absolute",
+    bottom: verticalScale(70),
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: scale(8),
+  },
+  dot: {
+    width: scale(8),
+    height: scale(8),
+    borderRadius: 100,
+    backgroundColor: "#fff",
+    marginHorizontal: scale(2),
   },
 });
