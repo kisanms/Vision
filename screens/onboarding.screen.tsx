@@ -1,6 +1,7 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import Onboarding1 from "@/assets/svg/onboarding1";
 export default function OnboardingScreeen() {
   return (
     <LinearGradient
@@ -10,6 +11,7 @@ export default function OnboardingScreeen() {
       style={styles.container}
     >
       <StatusBar barStyle="light-content" />
+      <Onboarding1 />
     </LinearGradient>
   );
 }
