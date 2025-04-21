@@ -11,7 +11,7 @@ export const onBoardingData: onBoardingDataType[] = [
   },
   {
     id: 2,
-    title: "Welcome to the App",
+    title: "Screen 2",
     subtitle: "This is a sample onboarding screen for the app.",
     image: <Onboarding2 />,
   },

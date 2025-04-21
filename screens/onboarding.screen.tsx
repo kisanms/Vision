@@ -2,6 +2,7 @@ import {
   Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -13,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { onBoardingData } from "@/configs/contants";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useFonts } from "expo-font";
+import AntDesign from "@expo/vector-icons/AntDesign";
 export default function OnboardingScreeen() {
   const [fontsLoaded, fontError] = useFonts({
     SegeoUI: require("../assets/fonts/Segoe UI.ttf"),
@@ -22,6 +24,7 @@ export default function OnboardingScreeen() {
   }
   const [activeIndex, setActiveIndex] = React.useState(0);
   const scrollViewRef = React.useRef<ScrollView>(null);
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(
@@ -29,6 +32,20 @@ export default function OnboardingScreeen() {
     );
     setActiveIndex(currentIndex);
   };
+
+  const handleSkip = () => {
+    const nextIndex = activeIndex + 1;
+    if (nextIndex < onBoardingData.length) {
+      scrollViewRef.current?.scrollTo({
+        x: Dimensions.get("window").width * nextIndex,
+        animated: true,
+      });
+      setActiveIndex(nextIndex);
+    } else {
+      console.log("End of onboarding reached");
+    }
+  };
+
   return (
     <LinearGradient
       colors={["#250152", "#000000"]}
@@ -37,11 +54,17 @@ export default function OnboardingScreeen() {
       style={styles.container}
     >
       <StatusBar barStyle="light-content" />
+      {/**skip button */}
+      <Pressable style={styles.skipContainer} onPress={handleSkip}>
+        <Text style={styles.skipText}>Skip</Text>
+        <AntDesign name="arrowright" size={scale(18)} color="white" />
+      </Pressable>
       <ScrollView
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
+        ref={scrollViewRef}
       >
         {onBoardingData.map((item: onBoardingDataType, index: number) => (
           <View key={index} style={styles.slide}>
@@ -111,5 +134,20 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "#fff",
     marginHorizontal: scale(2),
+  },
+  skipContainer: {
+    position: "absolute",
+    top: verticalScale(50),
+    right: scale(40),
+    flexDirection: "row",
+    alignItems: "center",
+    gap: scale(5),
+    zIndex: 10,
+  },
+  skipText: {
+    fontSize: scale(16),
+    color: "#fff",
+    fontWeight: "400",
+    fontFamily: "SegeoUI",
   },
 });
