@@ -11,7 +11,15 @@ import {
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { onBoardingData } from "@/configs/contants";
+import { scale, verticalScale } from "react-native-size-matters";
+import { useFonts } from "expo-font";
 export default function OnboardingScreeen() {
+  const [fontsLoaded, fontError] = useFonts({
+    SegeoUI: require("../assets/fonts/Segoe UI.ttf"),
+  });
+  if (!fontsLoaded && fontError) {
+    return null;
+  }
   const [activeIndex, setActiveIndex] = React.useState(0);
   const scrollViewRef = React.useRef<ScrollView>(null);
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -59,16 +67,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: scale(23),
+    textAlign: "center",
+    fontWeight: "500",
+    fontFamily: "SegeoUI",
     color: "#fff",
     marginTop: 20,
   },
   subtitle: {
-    fontSize: 16,
-    color: "#fff",
+    width: scale(290),
+    marginHorizontal: "auto",
+    fontSize: scale(14),
+    color: "#9A9999",
+    fontWeight: "400",
     textAlign: "center",
-    marginHorizontal: 20,
-    marginTop: 10,
+    fontFamily: "SegeoUI",
+    paddingTop: verticalScale(10),
   },
 });

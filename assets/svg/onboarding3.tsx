@@ -5,7 +5,7 @@ import Svg, { Rect, Defs, Pattern, Use, Image } from "react-native-svg";
 const Onboarding3 = (props: any) => (
   <Svg
     width={scale(300)}
-    height={scale(277)}
+    height={scale(262)}
     viewBox="0 0 320 282"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
