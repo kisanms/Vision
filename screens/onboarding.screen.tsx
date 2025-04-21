@@ -15,6 +15,8 @@ import { onBoardingData } from "@/configs/contants";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useFonts } from "expo-font";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 export default function OnboardingScreeen() {
   const [fontsLoaded, fontError] = useFonts({
     SegeoUI: require("../assets/fonts/Segoe UI.ttf"),
@@ -33,7 +35,7 @@ export default function OnboardingScreeen() {
     setActiveIndex(currentIndex);
   };
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
     const nextIndex = activeIndex + 1;
     if (nextIndex < onBoardingData.length) {
       scrollViewRef.current?.scrollTo({
@@ -42,7 +44,8 @@ export default function OnboardingScreeen() {
       });
       setActiveIndex(nextIndex);
     } else {
-      console.log("End of onboarding reached");
+      await AsyncStorage.setItem("onboarding", "true");
+      router.push("/home/index");
     }
   };
 
