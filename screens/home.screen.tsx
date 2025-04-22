@@ -12,12 +12,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { scale, verticalScale } from "react-native-size-matters";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Audio } from "expo-av";
+import { AndroidAudioEncoder } from "expo-av/build/Audio";
 
 export default function HomeScreen() {
   const [text, setText] = React.useState("");
   const [isRecording, setIsRecording] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [recording, setRecording] = React.useState("");
+  const [recording, setRecording] = React.useState<Audio.Recording>();
   const [AIResponse, setAIResponse] = React.useState(false);
 
   //Microphone permission
@@ -42,6 +43,27 @@ export default function HomeScreen() {
     }
   };
 
+  const recordingOptions: any = {
+    android: {
+      extension: ".wav",
+      outPutFormat: Audio.AndroidOutputFormat.MPEG_4,
+      AndroidAudioEncoder: AndroidAudioEncoder.AAC,
+      sampleRate: 44100,
+      bitRate: 128000,
+      numberOfChannels: 2,
+    },
+    ios: {
+      extension: ".wav",
+      audioQuality: Audio.IOSAudioQuality.HIGH,
+      sampleRate: 44100,
+      bitRate: 128000,
+      numberOfChannels: 2,
+      linearPCMBitDepth: 16,
+      linearPCMIsFloat: false,
+      linearPCMIsBigEndian: false,
+    },
+  };
+
   const startRecording = async () => {
     const hasPermission = await getMicerophonePermission();
     if (!hasPermission) return;
@@ -52,9 +74,14 @@ export default function HomeScreen() {
       });
       setIsRecording(true);
 
-      const { recording } = await Audio.Recording.createAsync();
-    } catch (error) {}
+      const { recording } = await Audio.Recording.createAsync(recordingOptions);
+      setRecording(recording);
+    } catch (error) {
+      console.log("Error starting recording:", error);
+      Alert.alert("Error", "An error occurred while starting the recording.");
+    }
   };
+
   return (
     <LinearGradient
       colors={["#250152", "#000000"]}
