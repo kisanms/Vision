@@ -82,6 +82,18 @@ export default function HomeScreen() {
     }
   };
 
+  const stopRecording = async () => {
+    try {
+      setIsRecording(false);
+      setLoading(true);
+      await recording?.stopAndUnloadAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+      });
+      const uri = recording?.getURI();
+    } catch (error) {}
+  };
+
   return (
     <LinearGradient
       colors={["#250152", "#000000"]}
