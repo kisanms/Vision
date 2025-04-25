@@ -13,6 +13,7 @@ import { scale, verticalScale } from "react-native-size-matters";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Audio } from "expo-av";
 import { AndroidAudioEncoder } from "expo-av/build/Audio";
+import axios from "axios";
 
 export default function HomeScreen() {
   const [text, setText] = React.useState("");
@@ -91,7 +92,45 @@ export default function HomeScreen() {
         allowsRecordingIOS: false,
       });
       const uri = recording?.getURI();
-    } catch (error) {}
+      //send audio to whisper API for transcription
+
+      const transcript = await sendAudioToWhisper(uri!);
+
+      setText(transcript);
+    } catch (error) {
+      console.log("Error stopping recording:", error);
+      Alert.alert("Error", "An error occurred while stopping the recording.");
+    }
+  };
+
+  const sendAudioToWhisper = async (uri: string) => {
+    try {
+      const formData: any = new FormData();
+      formData.append("file", {
+        uri,
+        name: "recording.wav",
+        type: "audio/wav",
+      });
+      formData.append("model", "whisper-1");
+
+      const response = await axios.post(
+        "https://api.openai.com/v1/audio/transcriptions",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.EXPO_PUBLIC_OPENAI_API_KEY}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.text;
+    } catch (error) {
+      console.log("Error sending audio to Whisper:", error);
+      Alert.alert(
+        "Error",
+        "An error occurred while sending the audio to Whisper."
+      );
+    }
   };
 
   return (
