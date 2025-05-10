@@ -162,19 +162,28 @@ export default function HomeScreen() {
         }}
       />
       <View style={{ marginTop: verticalScale(-40) }}>
-        <TouchableOpacity
-          style={{
-            width: scale(110),
-            height: scale(110),
-            flexDirection: "row",
-            backgroundColor: "#fff",
-            borderRadius: scale(100),
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <FontAwesome name="microphone" size={scale(50)} color="#2b3356" />
-        </TouchableOpacity>
+        {!isRecording ? (
+          <>
+            <TouchableOpacity
+              style={{
+                width: scale(110),
+                height: scale(110),
+                flexDirection: "row",
+                backgroundColor: "#fff",
+                borderRadius: scale(100),
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={startRecording}
+            >
+              <FontAwesome name="microphone" size={scale(50)} color="#2b3356" />
+            </TouchableOpacity>
+          </>
+        ) : (
+          <TouchableOpacity onPress={stopRecording}>
+            <FontAwesome name="microphone" size={scale(50)} color="#2b3356" />
+          </TouchableOpacity>
+        )}
       </View>
       <View
         style={{
