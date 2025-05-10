@@ -14,6 +14,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Audio } from "expo-av";
 import { AndroidAudioEncoder } from "expo-av/build/Audio";
 import axios from "axios";
+import LottieView from "lottie-react-native";
 
 export default function HomeScreen() {
   const [text, setText] = React.useState("");
@@ -181,7 +182,13 @@ export default function HomeScreen() {
           </>
         ) : (
           <TouchableOpacity onPress={stopRecording}>
-            <FontAwesome name="microphone" size={scale(50)} color="#2b3356" />
+            <LottieView
+              source={require("@/assets/animations/1.json")}
+              autoPlay
+              loop
+              speed={1.3}
+              style={{ width: scale(140), height: scale(140) }}
+            />
           </TouchableOpacity>
         )}
       </View>
