@@ -119,11 +119,12 @@ export default function HomeScreen() {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${process.env.EXPO_PUBLIC_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.EXPO_PUBLIC_ASSEMBLYAI_API_KEY}`,
             "Content-Type": "multipart/form-data",
           },
         }
       );
+      console.log(response.data.text);
       return response.data.text;
     } catch (error) {
       console.log("Error sending audio to Whisper:", error);
