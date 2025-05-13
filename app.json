@@ -2,8 +2,14 @@
   "expo": {
     "name": "Vision",
     "slug": "Vision",
-    "extra":{
-      "ASSEMBLYAI_API_KEY": "d5f2186b222f48f6b29067976a94125b"
+    "extra": {
+      "ASSEMBLYAI_API_KEY": "d5f2186b222f48f6b29067976a94125b",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "20644a24-edb1-4c24-a117-1cadf08e0b0f"
+      }
     },
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +24,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.deepkm.Vision"
     },
     "web": {
       "bundler": "metro",
@@ -27,7 +38,7 @@
     },
     "plugins": [
       "expo-router",
-     
+      "expo-av",
       [
         "expo-splash-screen",
         {
@@ -36,14 +47,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ],
-      [
-        "expo-av",
-        {
-          "microphonePermission": "Allow Vision to access your microphone."
-        }
       ]
-      
     ],
     "experiments": {
       "typedRoutes": true
